@@ -1,23 +1,59 @@
 import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
 
-# Load dataset
-df = pd.read_csv("Loan.csv")
+print("Loading datasets...")
 
-# Remove duplicates
-df = df.drop_duplicates()
+# ----------------------------
+# 1. Load Data
+# ----------------------------
+loan = pd.read_csv("Loan.csv")
+borrower = pd.read_csv("Borrower.csv")
 
-# Separate numeric & categorical columns
-num_cols = df.select_dtypes(include=['int64', 'float64']).columns
-cat_cols = df.select_dtypes(include=['object']).columns
+print("Loan shape:", loan.shape)
+print("Borrower shape:", borrower.shape)
 
-# Fill numeric missing values with mean
-df[num_cols] = df[num_cols].fillna(df[num_cols].mean())
+# ----------------------------
+# 2. Merge Datasets
+# ----------------------------
+data = pd.merge(loan, borrower, on="memberId", how="inner")
 
-# Fill categorical missing values with mode
-for col in cat_cols:
-    df[col] = df[col].fillna(df[col].mode()[0])
+print("Merged shape:", data.shape)
 
-# Save cleaned dataset
-df.to_csv("Loan_cleaned_v2.csv", index=False)
+# ----------------------------
+# 3. Handle Missing Values
+# ----------------------------
+data = data.fillna(data.median(numeric_only=True))
 
-print("✅ Numerical and categorical missing values handled successfully")
+# ----------------------------
+# 4. Encode Target Variable
+# ----------------------------
+data['loanStatus'] = data['loanStatus'].map({
+    'Current': 0,
+    'Default': 1
+})
+
+# ----------------------------
+# 5. Convert Categorical Variables
+# ----------------------------
+data = pd.get_dummies(data, drop_first=True)
+
+# ----------------------------
+# 6. Feature Scaling
+# ----------------------------
+scaler = StandardScaler()
+
+numeric_cols = data.select_dtypes(include=np.number).columns
+data[numeric_cols] = scaler.fit_transform(data[numeric_cols])
+
+# ----------------------------
+# 7. Drop Unnecessary Columns
+# ----------------------------
+data = data.drop(columns=['loanId', 'memberId'], errors='ignore')
+
+# ----------------------------
+# 8. Save Processed Dataset
+# ----------------------------
+data.to_csv("Merged_Preprocessed_Data.csv", index=False)
+
+print("✅ Merging and Preprocessing Completed Successfully!")

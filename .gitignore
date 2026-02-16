@@ -1,3 +1,5 @@
-.venv/
-__pycache__/
-*.pyc
+Loan.csv
+Borrower.csv
+Merged_Preprocessed_Data.csv
+Loan_cleaned.csv
+Loan_cleaned_v2.csv
