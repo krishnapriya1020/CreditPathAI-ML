@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>CreditPath AI</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>CreditPath AI</h1>
+
+    <h3>Loan Default Prediction System</h3>
+
+    <form id="loanForm">
+
+        <label>Loan Amount</label>
+
+        <input type="number" id="loanAmount" required>
+
+        <label>Interest Rate</label>
+
+        <input type="number" step="0.01" id="interestRate" required>
+
+        <label>Monthly Payment</label>
+
+        <input type="number" id="monthlyPayment" required>
+
+        <label>Purpose</label>
+
+        <select id="purpose">
+
+            <option>debtconsolidation</option>
+            <option>business</option>
+            <option>education</option>
+            <option>healthcare</option>
+            <option>homeimprovement</option>
+            <option>auto</option>
+            <option>other</option>
+
+        </select>
+
+        <label>Term</label>
+
+        <select id="term">
+
+            <option>36 months</option>
+            <option>48 months</option>
+            <option selected>60 months</option>
+
+        </select>
+
+        <label>Grade</label>
+
+        <select id="grade">
+
+            <option>A1</option>
+            <option>A2</option>
+            <option>A3</option>
+            <option>B1</option>
+            <option selected>B2</option>
+            <option>B3</option>
+            <option>C1</option>
+            <option>C2</option>
+            <option>C3</option>
+            <option>D1</option>
+            <option>D2</option>
+            <option>D3</option>
+            <option>E1</option>
+            <option>E2</option>
+            <option>E3</option>
+
+        </select>
+
+        <label>Joint Application</label>
+
+        <select id="joint">
+
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+
+        </select>
+
+        <button type="submit">
+
+            Predict Risk
+
+        </button>
+
+    </form>
+
+    <div id="result"></div>
+
+</div>
+
+<script src="/static/script.js"></script>
+
+</body>
+
+</html>
